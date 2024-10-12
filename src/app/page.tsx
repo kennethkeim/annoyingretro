@@ -38,12 +38,12 @@ function OptionListItem({ opt, onAdd, onRemove }: OptionProps) {
   return (
     <li className="mb-3 flex justify-between rounded-md bg-white p-3 shadow-md">
       <div className="flex items-center">
-        <p>{opt.name}</p>
-
         <div
           style={{ backgroundColor: opt.color }}
-          className="ml-2 h-3 w-3 rounded-full"
+          className="mr-2 h-3 w-3 rounded-sm"
         ></div>
+
+        <p>{opt.name}</p>
       </div>
 
       <div className="flex">

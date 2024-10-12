@@ -1,4 +1,4 @@
-import type { Option, Response } from "./types";
+import type { Option, RetroResponse } from "./types";
 
 export const mockOptions: Option[] = [
   { name: "Write code", color: "green" },
@@ -8,7 +8,7 @@ export const mockOptions: Option[] = [
   { name: "Design solutions", color: "blue" },
 ];
 
-export const mockResponses: Response[] = [
+export const mockResponses: RetroResponse[] = [
   {
     items: [
       { name: "Write code", color: "green", value: 10 },

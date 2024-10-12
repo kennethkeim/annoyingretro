@@ -1,6 +1,6 @@
 "use client";
 
-import type { Option, Response, ResponseItem } from "./types";
+import type { Option, RetroResponse, ResponseItem } from "./types";
 import { useState } from "react";
 
 const RESPONSES_KEY = "responses";
@@ -14,7 +14,7 @@ const options = isBrowser
   : [];
 
 const responses = isBrowser
-  ? (JSON.parse(localStorage.getItem(RESPONSES_KEY) ?? "[]") as Response[])
+  ? (JSON.parse(localStorage.getItem(RESPONSES_KEY) ?? "[]") as RetroResponse[])
   : [];
 
 function Chart() {
@@ -95,7 +95,7 @@ function Form() {
     const total = items.reduce((p, c) => p + c.value, 0);
     if (total < 60) return;
 
-    const newResponse: Response = {
+    const newResponse: RetroResponse = {
       date: new Date().toISOString(),
       items,
     };

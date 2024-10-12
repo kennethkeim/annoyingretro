@@ -5,12 +5,12 @@ export interface Option {
 
 export type ResponseItem = Option & { value: number };
 
-export interface Response {
+export interface RetroResponse {
   items: ResponseItem[];
   date: string;
 }
 
 export interface Day {
-  responses: Response[];
+  responses: RetroResponse[];
   day: string;
 }

@@ -30,9 +30,6 @@ export const env = createEnv({
     SYS_EVENTS_SENDER: z.string(),
     SYS_EVENTS_RECIPIENT: z.string(),
     API_TOKEN: z.string(),
-    NOTION_API_KEY: z.string(),
-    TOGGL_API_KEY: z.string(),
-    NOTION_DBS: z.string(),
   },
 
   /**
@@ -61,9 +58,6 @@ export const env = createEnv({
     SYS_EVENTS_SENDER: process.env.SYS_EVENTS_SENDER,
     SYS_EVENTS_RECIPIENT: process.env.SYS_EVENTS_RECIPIENT,
     API_TOKEN: process.env.API_TOKEN,
-    NOTION_API_KEY: process.env.NOTION_API_KEY,
-    TOGGL_API_KEY: process.env.TOGGL_API_KEY,
-    NOTION_DBS: process.env.NOTION_DBS,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

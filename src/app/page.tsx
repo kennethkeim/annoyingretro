@@ -22,8 +22,7 @@ const getDays = (responses: RetroResponse[]): Day[] => {
 
   responses.forEach((response) => {
     const date = new Date(response.date);
-    // const day = `${date.getMonth() + 1}/${date.getDate()}`;
-    const day = date.toISOString().split("T")[0];
+    const day = `${date.getMonth() + 1}/${date.getDate()}`;
     if (!day) return;
     const existingDay = days.find((d) => d.day === day);
 

@@ -263,22 +263,55 @@ function SettingsForm() {
   );
 }
 
+const ExportJson = () => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="rounded-md bg-neutral-200 px-7 py-1"
+      >
+        {expanded ? "-" : "+"}
+      </button>
+
+      {expanded ? (
+        <div>
+          <p>Options</p>
+          <p className="mb-2 text-xs text-pink-500">
+            {JSON.stringify(options)}
+          </p>
+
+          <p>Responses</p>
+          <p className="text-xs text-pink-500">{JSON.stringify(responses)}</p>
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 export default function ProductivityPage() {
   return (
-    <main className="flex min-h-screen flex-wrap justify-center gap-5 bg-slate-50 p-5">
-      <section className="mb-8 flex basis-[500px] justify-center">
-        <Chart />
-      </section>
-
-      <div className="basis-96">
-        <section className="flex justify-center">
-          <Form />
+    <main className="min-h-screen bg-slate-50 p-10">
+      <div className="flex flex-wrap justify-center gap-5">
+        <section className="mb-8 flex basis-[500px] justify-center">
+          <Chart />
         </section>
 
-        <section className="flex justify-center">
-          <SettingsForm />
-        </section>
+        <div className="mb-8 basis-96">
+          <section className="flex justify-center">
+            <Form />
+          </section>
+
+          <section className="flex justify-center">
+            <SettingsForm />
+          </section>
+        </div>
       </div>
+
+      <section>
+        <ExportJson />
+      </section>
     </main>
   );
 }

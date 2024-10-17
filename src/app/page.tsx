@@ -59,7 +59,7 @@ function DayItemCard({ day, dateStr }: { day: Day; dateStr: string }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="m-auto mb-3 max-w-xl rounded-md bg-white p-5 shadow-md">
+    <div className="m-auto mb-3 rounded-md bg-white p-5 shadow-md">
       <div className="flex justify-between">
         <p>{dateStr}</p>
         <button
@@ -265,18 +265,20 @@ function SettingsForm() {
 
 export default function ProductivityPage() {
   return (
-    <main className="min-h-screen bg-slate-50 p-5">
-      <section className="mb-8 flex justify-center border p-3 py-10">
+    <main className="flex min-h-screen flex-wrap justify-center gap-5 bg-slate-50 p-5">
+      <section className="mb-8 flex basis-[500px] justify-center">
         <Chart />
       </section>
 
-      <section className="flex w-full justify-center">
-        <Form />
-      </section>
+      <div className="basis-96">
+        <section className="flex justify-center">
+          <Form />
+        </section>
 
-      <section className="flex w-full justify-center">
-        <SettingsForm />
-      </section>
+        <section className="flex justify-center">
+          <SettingsForm />
+        </section>
+      </div>
     </main>
   );
 }

@@ -90,12 +90,9 @@ function Chart() {
 
   return (
     <div className="w-full">
-      {days.map((day) => {
-        const dayDate = new Date(day.day);
-        const dateStr = `${dayDate.getMonth() + 1}/${dayDate.getDate()}`;
-
-        return <DayItemCard key={day.day} day={day} dateStr={dateStr} />;
-      })}
+      {days.map((day) => (
+        <DayItemCard key={day.day} day={day} dateStr={day.day} />
+      ))}
     </div>
   );
 }

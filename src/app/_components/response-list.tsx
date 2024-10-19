@@ -85,7 +85,7 @@ function DaySummary({ day }: { day: Day }) {
         );
       })}
 
-      <p className="text-xs">{getHourMinStr(totalTime)} Total</p>
+      <p className="mt-2 text-xs font-bold">{getHourMinStr(totalTime)} Total</p>
     </div>
   );
 }

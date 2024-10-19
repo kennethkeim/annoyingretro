@@ -1,12 +1,8 @@
 "use client";
 
 import type { RetroResponse, ResponseItem, Day } from "../types";
-import { useState } from "react";
-import { IS_BROWSER, RESPONSES_KEY } from "../constants";
-
-const responses = IS_BROWSER
-  ? (JSON.parse(localStorage.getItem(RESPONSES_KEY) ?? "[]") as RetroResponse[])
-  : [];
+import { useEffect, useState } from "react";
+import { getResponses } from "../storage";
 
 const getHourMinStr = (minutes: number): string => {
   const hr = Math.floor(minutes / 60);
@@ -125,7 +121,11 @@ function DayItemCard({ day, dateStr }: { day: Day; dateStr: string }) {
 }
 
 export function Chart() {
-  const days = getDays(responses);
+  const [days, setDays] = useState<Day[]>([]);
+
+  useEffect(() => {
+    setDays(getDays(getResponses()));
+  }, []);
 
   return (
     <div className="w-full">

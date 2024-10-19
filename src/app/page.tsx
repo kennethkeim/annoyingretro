@@ -1,17 +1,10 @@
 "use client";
 
 import type { Option, RetroResponse, ResponseItem } from "./types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chart } from "./_components/response-list";
-import { IS_BROWSER, OPTIONS_KEY, RESPONSES_KEY, STEP } from "./constants";
-
-const options = IS_BROWSER
-  ? (JSON.parse(localStorage.getItem(OPTIONS_KEY) ?? "[]") as Option[])
-  : [];
-
-const responses = IS_BROWSER
-  ? (JSON.parse(localStorage.getItem(RESPONSES_KEY) ?? "[]") as RetroResponse[])
-  : [];
+import { OPTIONS_KEY, RESPONSES_KEY, STEP } from "./constants";
+import { getOptions, getResponses } from "./storage";
 
 type OptionProps = { opt: Option; onAdd: () => void; onRemove: () => void };
 
@@ -47,6 +40,11 @@ function OptionListItem({ opt, onAdd, onRemove }: OptionProps) {
 
 function Form() {
   const [items, setItems] = useState<ResponseItem[]>([]);
+  const [options, setOptions] = useState<Option[]>([]);
+
+  useEffect(() => {
+    setOptions(getOptions());
+  }, []);
 
   const handleAdd = (opt: Option) => {
     const total = items.reduce((p, c) => p + c.value, 0);
@@ -82,7 +80,7 @@ function Form() {
     };
     localStorage.setItem(
       RESPONSES_KEY,
-      JSON.stringify([...responses, newResponse]),
+      JSON.stringify([...getResponses(), newResponse]),
     );
     // setItems([]);
     location.reload();
@@ -138,6 +136,7 @@ function SettingsForm() {
 
   const handleSave = () => {
     const newTask: Option = { name: optionName, color };
+    const options = getOptions();
     localStorage.setItem(OPTIONS_KEY, JSON.stringify([...options, newTask]));
     // setOptionName("");
     // setColor("");
@@ -192,11 +191,13 @@ const ExportJson = () => {
         <div>
           <p>Options</p>
           <p className="mb-2 text-xs text-pink-500">
-            {JSON.stringify(options)}
+            {JSON.stringify(getOptions())}
           </p>
 
           <p>Responses</p>
-          <p className="text-xs text-pink-500">{JSON.stringify(responses)}</p>
+          <p className="text-xs text-pink-500">
+            {JSON.stringify(getResponses())}
+          </p>
         </div>
       ) : null}
     </div>

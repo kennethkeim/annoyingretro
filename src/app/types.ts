@@ -12,5 +12,8 @@ export interface RetroResponse {
 
 export interface Day {
   responses: RetroResponse[];
+  /** e.g. "10/19" */
   day: string;
+  /** unix TS of first response in day */
+  firstResponseTs: number;
 }

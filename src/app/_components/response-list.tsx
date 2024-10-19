@@ -23,7 +23,11 @@ const getDays = (responses: RetroResponse[]): Day[] => {
     if (existingDay) {
       existingDay.responses.push(response);
     } else {
-      days.push({ day, responses: [response] });
+      days.push({
+        day,
+        responses: [response],
+        firstResponseTs: date.getTime(),
+      });
     }
   });
 
@@ -132,7 +136,11 @@ export function Chart() {
   const [days, setDays] = useState<Day[]>([]);
 
   useEffect(() => {
-    setDays(getDays(getResponses()));
+    const daysUnsorted = getDays(getResponses());
+    const daysSorted = [...daysUnsorted].sort((a, b) => {
+      return b.firstResponseTs - a.firstResponseTs;
+    });
+    setDays(daysSorted);
   }, []);
 
   return (
@@ -142,7 +150,7 @@ export function Chart() {
           key={day.day}
           day={day}
           dateStr={day.day}
-          isCurrentDay={i === days.length - 1}
+          isCurrentDay={i === 0}
         />
       ))}
     </div>

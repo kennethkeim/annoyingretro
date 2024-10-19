@@ -86,13 +86,21 @@ function DaySummary({ day }: { day: Day }) {
   );
 }
 
-function DayItemCard({ day, dateStr }: { day: Day; dateStr: string }) {
-  const [expanded, setExpanded] = useState(false);
+function DayItemCard({
+  day,
+  dateStr,
+  isCurrentDay,
+}: {
+  day: Day;
+  dateStr: string;
+  isCurrentDay: boolean;
+}) {
+  const [expanded, setExpanded] = useState(isCurrentDay);
 
   return (
     <div className="m-auto mb-3 rounded-md bg-white p-5 shadow-md">
       <div className="flex justify-between">
-        <p>{dateStr}</p>
+        <p className="font-medium">{isCurrentDay ? "Today" : dateStr}</p>
         <button
           className="mr-2 flex w-[30px] items-center justify-center rounded-md bg-neutral-200"
           onClick={() => setExpanded(!expanded)}
@@ -129,8 +137,13 @@ export function Chart() {
 
   return (
     <div className="w-full">
-      {days.map((day) => (
-        <DayItemCard key={day.day} day={day} dateStr={day.day} />
+      {days.map((day, i) => (
+        <DayItemCard
+          key={day.day}
+          day={day}
+          dateStr={day.day}
+          isCurrentDay={i === days.length - 1}
+        />
       ))}
     </div>
   );

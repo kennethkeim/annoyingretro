@@ -93,18 +93,18 @@ function DaySummary({ day }: { day: Day }) {
 function DayItemCard({
   day,
   dateStr,
-  isCurrentDay,
+  isMostRecentDay,
 }: {
   day: Day;
   dateStr: string;
-  isCurrentDay: boolean;
+  isMostRecentDay: boolean;
 }) {
-  const [expanded, setExpanded] = useState(isCurrentDay);
+  const [expanded, setExpanded] = useState(isMostRecentDay);
 
   return (
     <div className="m-auto mb-3 rounded-md bg-white p-5 shadow-md">
       <div className="flex justify-between">
-        <p className="font-medium">{isCurrentDay ? "Today" : dateStr}</p>
+        <p className="font-medium">{dateStr}</p>
         <button
           className="mr-2 flex w-[30px] items-center justify-center rounded-md bg-neutral-200"
           onClick={() => setExpanded(!expanded)}
@@ -150,7 +150,7 @@ export function Chart() {
           key={day.day}
           day={day}
           dateStr={day.day}
-          isCurrentDay={i === 0}
+          isMostRecentDay={i === 0}
         />
       ))}
     </div>

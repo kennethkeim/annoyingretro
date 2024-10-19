@@ -17,6 +17,13 @@ const responses = isBrowser
   ? (JSON.parse(localStorage.getItem(RESPONSES_KEY) ?? "[]") as RetroResponse[])
   : [];
 
+const getHourMinStr = (minutes: number): string => {
+  const hr = Math.floor(minutes / 60);
+  let min = (minutes % 60).toString();
+  if (min.length === 1) min = `0${min}`;
+  return `${hr}:${min}`;
+};
+
 const getDays = (responses: RetroResponse[]): Day[] => {
   const days: Day[] = [];
 
@@ -38,19 +45,56 @@ const getDays = (responses: RetroResponse[]): Day[] => {
 
 function ResponseCard({ res, hrStr }: { res: RetroResponse; hrStr: string }) {
   return (
-    <div key={res.date} className="flex flex-wrap items-center gap-1 font-mono">
-      <p className="text-sm">{hrStr}</p>
+    <div
+      key={res.date}
+      className="flex flex-wrap items-center gap-1 font-mono text-xs"
+    >
+      <p>{hrStr}</p>
 
-      {res.items.map((item, index) => (
-        <p
-          key={res.date + item.name}
-          className="text-xs"
-          style={{ color: item.color }}
-        >
-          {item.name} {item.value}m
-          {index === res.items.length - 1 ? "" : <span>,</span>}
-        </p>
-      ))}
+      {res.items.map((item, index) => {
+        const time = `${item.value}m`;
+        return (
+          <p key={item.name} style={{ color: item.color }}>
+            {item.name} {time}
+            {index === res.items.length - 1 ? "" : <span>,</span>}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+function DaySummary({ day }: { day: Day }) {
+  const clonedDay = structuredClone(day);
+  const allItems = clonedDay.responses.flatMap((r) => r.items);
+
+  const totals = allItems.reduce<ResponseItem[]>((acc, curr) => {
+    const existing = acc.find((i) => i.name === curr.name);
+    if (existing) {
+      existing.value += curr.value;
+    } else {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+
+  const sortedTotals = totals.sort((a, b) => b.value - a.value);
+
+  const totalTime = sortedTotals.reduce((p, c) => p + c.value, 0);
+
+  return (
+    <div className="font-mono">
+      {sortedTotals.map((item) => {
+        const time = getHourMinStr(item.value);
+
+        return (
+          <p key={item.name} className="text-xs" style={{ color: item.color }}>
+            {time} {item.name}
+          </p>
+        );
+      })}
+
+      <p className="text-xs">{getHourMinStr(totalTime)} Total</p>
     </div>
   );
 }
@@ -71,7 +115,11 @@ function DayItemCard({ day, dateStr }: { day: Day; dateStr: string }) {
       </div>
 
       {expanded ? (
-        <div>
+        <div className="mt-3">
+          <h3 className="mb-1 font-bold">Summary</h3>
+          <DaySummary day={day} />
+
+          <h3 className="mb-1 mt-3 font-bold">Hourly</h3>
           {day.responses.map((r) => {
             const rDate = new Date(r.date);
             const hr =

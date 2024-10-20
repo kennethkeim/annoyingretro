@@ -10,7 +10,7 @@ type OptionProps = { opt: Option; onAdd: () => void; onRemove: () => void };
 
 function OptionListItem({ opt, onAdd, onRemove }: OptionProps) {
   return (
-    <li className="mb-3 flex justify-between rounded-md bg-white p-3 shadow-md">
+    <li className="flex w-full max-w-[275px] justify-between rounded-md bg-white p-3 shadow-md">
       <div className="flex items-center">
         <div
           style={{ backgroundColor: opt.color }}
@@ -22,14 +22,14 @@ function OptionListItem({ opt, onAdd, onRemove }: OptionProps) {
 
       <div className="flex">
         <button
-          className="mr-2 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-neutral-200"
+          className="ml-4 mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-md bg-neutral-200"
           onClick={onRemove}
         >
           -
         </button>
         <button
           onClick={onAdd}
-          className="flex h-[30px] w-[30px] items-center justify-center rounded-md bg-neutral-200"
+          className="flex h-[25px] w-[25px] items-center justify-center rounded-md bg-neutral-200"
         >
           +
         </button>
@@ -87,12 +87,12 @@ function Form() {
   };
 
   return (
-    <div className="basis-80">
+    <div>
       <p className="mb-2 text-lg font-medium">
         What did you do for the last hour?
       </p>
 
-      <div className="mb-4 flex overflow-hidden rounded-md border">
+      <div className="mb-4 flex w-full max-w-[275px] overflow-hidden rounded-md border">
         {items.map((i) => (
           <div
             key={i.name}
@@ -107,7 +107,7 @@ function Form() {
         {!items.length ? <div className="py-4"></div> : null}
       </div>
 
-      <ul>
+      <ul className="flex flex-wrap gap-3">
         {options.map((opt) => (
           <OptionListItem
             key={opt.name}
@@ -212,7 +212,7 @@ export default function ProductivityPage() {
           <Chart />
         </section>
 
-        <div className="mb-8 basis-96">
+        <div className="mb-8 max-w-[600px] grow basis-[500px]">
           <section className="flex justify-center">
             <Form />
           </section>
